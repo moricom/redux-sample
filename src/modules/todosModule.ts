@@ -26,13 +26,14 @@ const todosModules = createSlice({
         text: action.payload,
         completed: false,
       };
-      state.list.push(todo);
+      return state.list.concat(todo);
     },
 
     toggleTodo: (state, action: PayloadAction<number>) => {
       const id = action.payload;
-      state.list.forEach((todo) => {
-        todo.completed = todo.id === id ? !todo.completed : todo.completed;
+      return state.list.map((todo) => {
+        ...todo,
+        completed: todo.id === id ? !todo.completed : todo.completed;
       });
     },
   },

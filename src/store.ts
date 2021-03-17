@@ -1,25 +1,34 @@
-import { combineReducers, configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
-import logger from 'redux-logger';
-import todosModule from './modules/todosModule';
+import {
+  combineReducers,
+  configureStore,
+  getDefaultMiddleware,
+} from "@reduxjs/toolkit";
+import logger from "redux-logger";
+import todoReducer from "redux-modules/todo-list";
 
 // rootReducer の準備
-const rootReducer = combineReducers({
-  todo: todosModule.reducer,
+export const rootReducer = combineReducers({
+  todoList: todoReducer,
 });
 
 // setup 関数を用意してエクスポートする。
 export const setupStore = () => {
-  const middlewares = [...getDefaultMiddleware()];
+  const middleware = [...getDefaultMiddleware()];
 
   // only development
   if (process.env.NODE_ENV === `development`) {
-    middlewares.push(logger);
+    middleware.push(logger);
   }
 
   const store = configureStore({
     reducer: rootReducer,
-    middleware: middlewares,
+    middleware,
   });
 
   return store;
 };
+
+export const store = setupStore();
+export default store;
+
+export type RootState = ReturnType<typeof store.getState>;

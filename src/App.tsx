@@ -1,10 +1,9 @@
-import React from 'react';
-import './App.css';
-import AddTodo from './components/AddTodo';
-import TodoList from './components/TodoList';
+import React from "react";
+import AddTodo from "components/AddTodo";
+import TodoList from "components/TodoList";
 
-const App = () => (
-  <div className="App">
+const App: React.FC = () => (
+  <div>
     <AddTodo />
     <TodoList />
   </div>

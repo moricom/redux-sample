@@ -1,32 +1,28 @@
-import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import todosModules from '../modules/todosModule';
-interface AddTodoProps {}
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { addTodo } from "redux-modules/todo-list";
 
-const AddTodo: React.FC<AddTodoProps> = (props) => {
+const AddTodo: React.FC = () => {
   const dispatch = useDispatch();
-  const [input, setInput] = useState('');
-  const addTodo = (e: React.FormEvent<HTMLButtonElement>) => {
-    if (input !== '') {
-      e.preventDefault();
-      dispatch(todosModules.actions.addTodo(input));
-      setInput('');
+  const [input, setInput] = useState<string>("");
+
+  const handleOnClick = () => {
+    if (input !== "") {
+      dispatch(addTodo(input));
+      setInput("");
     }
   };
 
+  const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const value = event.target.value;
+    setInput(value);
+  };
+
   return (
-    <form>
-      <input
-        type="text"
-        onChange={(e) => {
-          setInput(e.target.value);
-        }}
-        value={input}
-      />
-      <button type="submit" onClick={addTodo}>
-        add
-      </button>
-    </form>
+    <div>
+      <input type="text" onChange={handleOnChange} value={input} />
+      <button onClick={handleOnClick}>add</button>
+    </div>
   );
 };
 
